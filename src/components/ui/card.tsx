@@ -1,18 +1,24 @@
-import * as React from "react"
+import * as React from "react";
+// import { useSelector, type TypedUseSelectorHook } from "react-redux";
+// import type { RootState } from "redux/store";
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm",
-        className
-      )}
-      {...props}
-    />
-  )
+  // const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+  // const elements = useTypedSelector((state) => state.cart.itemList);
+
+  
+  function Card({ className, ...props }: React.ComponentProps<"div">) {
+    return (
+      <div
+        data-slot="card"
+        className={cn(
+          "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm",
+          className
+        )}
+        {...props}
+      />
+    )
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
