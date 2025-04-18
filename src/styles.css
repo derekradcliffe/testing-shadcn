@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Tera:wght@200&display=swap');
 @import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-lexend: "Lexend Tera", sans-serif;
+}
 
 body {
   @apply m-0;
@@ -11,6 +16,7 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --font-display: "Oswald", "sans-serif";
 }
 
 code {

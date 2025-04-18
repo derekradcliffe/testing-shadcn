@@ -11,11 +11,25 @@ import {
 
 import { Button } from '@/components/ui/button';
 
+import { useDispatch } from "react-redux";
+// import { addToCart, removeFromCart } from "../../redux/cartSlice";
+import { addToCart } from "../../redux/cartSlice";
+
 export const Route = createFileRoute('/')({
   component: App,
 })
 
 function App() {
+  const dispatch = useDispatch();
+
+  const increment = (item: any) => {
+    const { title, id, price } = item;
+    const quantity = 1;
+    const totalPrice = price * quantity;
+    
+    dispatch(addToCart({ title, id, price, quantity, totalPrice }));
+  };
+
   const chunkArray = (array: any, size: any) => {
     const result = [];
   
@@ -37,12 +51,14 @@ function App() {
                                 <img className='rounded-t-xl' src={item.image} alt="" />
                             </CardHeader>
                             <CardContent>
-                                <CardTitle>{item.name}</CardTitle>
+                                <CardTitle className="pb-[1rem]">{item.title}</CardTitle>
                                 <CardDescription>{item.description}</CardDescription>
                             </CardContent>
                             <CardFooter>
                                 <p className="text-sm text-muted-foreground">{item.price}</p>
-                                <Button className="ml-auto cursor-pointer hover:bg-black hover:text-white" variant="outline">
+                                <Button 
+                                  onClick={() => {increment(item)}}
+                                  className="ml-auto cursor-pointer hover:bg-black hover:text-white">
                                     Order
                                 </Button>
                             </CardFooter>
