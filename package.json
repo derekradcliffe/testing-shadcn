@@ -1,6 +1,7 @@
 {
   "name": "testing-shadcn",
   "private": true,
+  "homepage": "https://{username}.github.io/{repo-name}/",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
