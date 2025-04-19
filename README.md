@@ -1,4 +1,8 @@
-Welcome to your new TanStack app! 
+# What the heck is this?
+
+A React app (SPA) built using [create-tsrouter-app](https://www.npmjs.com/package/create-tsrouter-app/v/0.2.0). It uses React, shadcn/ui, Tailwind CSS, Vite, tanstack and Redux.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Getting Started
 
