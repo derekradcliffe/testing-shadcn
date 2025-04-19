@@ -55,10 +55,10 @@ function App() {
                                 <CardDescription>{item.description}</CardDescription>
                             </CardContent>
                             <CardFooter>
-                                <p className="text-sm text-muted-foreground">{item.price}</p>
+                                <p className="text-sm text-muted-foreground font-semibold">{item.price}</p>
                                 <Button 
                                   onClick={() => {increment(item)}}
-                                  className="ml-auto cursor-pointer hover:bg-black hover:text-white">
+                                  className="ml-auto cursor-pointer bg-black text-white border-black border-1 hover:bg-white hover:text-black hover:border-black hover:border-1">
                                     Order
                                 </Button>
                             </CardFooter>

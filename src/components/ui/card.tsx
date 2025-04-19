@@ -1,13 +1,7 @@
 import * as React from "react";
-// import { useSelector, type TypedUseSelectorHook } from "react-redux";
-// import type { RootState } from "redux/store";
 
 import { cn } from "@/lib/utils"
 
-  // const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-  // const elements = useTypedSelector((state) => state.cart.itemList);
-
-  
   function Card({ className, ...props }: React.ComponentProps<"div">) {
     return (
       <div
