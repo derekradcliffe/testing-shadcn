@@ -60,17 +60,11 @@ const cartSlice = createSlice({
     setShowCart(state) {
       state.showCart = !state.showCart;
     },
-    clearItem(state, action: PayloadAction<{ id: string }>) {
-      const findItem = state.itemList.find(
-        (item) => item.id === action.payload.id
-      );
-
-      console.log("findItem", findItem);
-
+    clearCart(state) {
       state.itemList = [];
     },
   },
 });
 
-export const { addToCart, removeFromCart, setShowCart, clearItem } = cartSlice.actions;
+export const { addToCart, removeFromCart, setShowCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

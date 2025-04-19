@@ -1,10 +1,11 @@
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul";
-// import { useDispatch, useSelector } from "react-redux";
-import { useSelector, type TypedUseSelectorHook } from "react-redux";
+import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
 import { type RootState } from "../../../redux/store";
+import { clearCart } from "../../../redux/cartSlice";
 
 import { cn } from "@/lib/utils"
+import { Button } from "./button";
 
 function Drawer({
   ...props
@@ -85,12 +86,12 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
     >
       <div>
       {elements.length > 0 ? (
-        elements.map((item, index) => (
-          <ul key={item.id || index}>
+        elements.map((item) => (
+          <ul>
             <li>
-              <div className="flex flex-row justify-center gap-2">
-                <p className="text- text-muted-foreground">{item.title}</p>
-                <p className="text-sm text-muted-foreground">{item.price}</p>
+              <div className="flex flex-row justify-center gap-2 items-center">
+                <p className="text- text-muted-foreground font-bold">{item.title}</p>
+                <p className="text-sm text-muted-foreground">${item.price}</p>
                 <p className="text-sm text-muted-foreground">x{item.quantity}</p>
               </div>
             </li>
@@ -113,6 +114,51 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("mt-auto flex flex-col gap-2 p-4", className)}
       {...props}
     />
+  )
+}
+
+function DrawerTotal({ className, ...props }: React.ComponentProps<"div">) {
+  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const elements = useTypedSelector((state) => state.cart.itemList);
+  const totalPrice = elements.reduce((acc, item) => acc + item.totalPrice, 0);
+  const totalQuantity = elements.reduce((acc, item) => acc + item.quantity, 0);
+  const total = totalPrice * totalQuantity;
+
+  function roundToDecimal(number: number, decimals: number) {
+    const factor = Math.pow(10, decimals);
+    return Math.round(number * factor) / factor;
+  }
+
+  return (
+    <div
+      data-slot="drawer-total"
+      className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+      {...props}
+    >
+      <div className="flex flex-row justify-center gap-2 items-center">
+        <p className="text- text-muted-foreground">Total</p>
+        <p className="text-sm text-muted-foreground">${roundToDecimal(total, 2)}</p>
+      </div>
+    </div>
+  )
+}
+
+function DrawerClearTotal({ className, ...props }: React.ComponentProps<"div">) {
+  // const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const dispatch = useDispatch();
+  // const elements = useTypedSelector((state) => state.cart.itemList);
+  const clear = () => {
+    dispatch(clearCart());
+  }
+
+  return (
+    <div
+      data-slot="drawer-total"
+      className={cn("mt-auto flex flex-col gap-2", className)}
+      {...props}
+    >
+      <Button className="bg-red-700 hover:bg-red-400" onClick={clear}>Clear</Button>
+    </div>
   )
 }
 
@@ -153,4 +199,6 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
+  DrawerTotal,
+  DrawerClearTotal,
 }
