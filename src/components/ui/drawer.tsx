@@ -120,9 +120,9 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
 function DrawerTotal({ className, ...props }: React.ComponentProps<"div">) {
   const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
   const elements = useTypedSelector((state) => state.cart.itemList);
-  const totalPrice = elements.reduce((acc, item) => acc + item.totalPrice, 0);
-  const totalQuantity = elements.reduce((acc, item) => acc + item.quantity, 0);
-  const total = totalPrice * totalQuantity;
+  const totalPrice = elements.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
+  // const totalQuantity = elements.reduce((acc, item) => acc + (item.quantity || 0), 0);
+  const total = totalPrice;
 
   function roundToDecimal(number: number, decimals: number) {
     const factor = Math.pow(10, decimals);
