@@ -11,24 +11,32 @@ import {
 
 import { Button } from '@/components/ui/button';
 
-import { useDispatch } from "react-redux";
-// import { addToCart, removeFromCart } from "../../redux/cartSlice";
-import { addToCart } from "../../redux/cartSlice";
+import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
+import { addToCart, removeFromCart } from "../../redux/cartSlice";
+import { type RootState } from "../../redux/store";
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
 function App() {
+  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const elements = useTypedSelector((state) => state.cart.itemList);
   const dispatch = useDispatch();
 
   const increment = (item: any) => {
     const { title, id, price } = item;
     const quantity = 1;
     const totalPrice = price * quantity;
-    
+
     dispatch(addToCart({ title, id, price, quantity, totalPrice }));
   };
+
+  const decrement = (item: any) => {
+    const { id } = item;
+
+    dispatch(removeFromCart({ id}));
+  }
 
   const chunkArray = (array: any, size: any) => {
     const result = [];
@@ -54,13 +62,46 @@ function App() {
                                 <CardTitle className="pb-[1rem]">{item.title}</CardTitle>
                                 <CardDescription>{item.description}</CardDescription>
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className='flex justify-between flex-col lg:flex-row'>
                                 <p className="text-sm text-muted-foreground font-semibold">{item.price}</p>
-                                <Button 
-                                  onClick={() => {increment(item)}}
-                                  className="ml-auto cursor-pointer bg-black text-white border-black border-1 hover:bg-white hover:text-black hover:border-black hover:border-1">
-                                    Order
-                                </Button>
+                                <CardContent className='flex flex-row pt-[1rem] lg:pt-[0]'>
+                                  <Button 
+                                    onClick={() => {increment(item)}}
+                                    className="ml-auto cursor-pointer bg-black text-white border-black border-1 hover:bg-white hover:text-black hover:border-black hover:border-1">
+                                      {elements.some((cartItem) => cartItem.id === item.id) ? (
+                                        elements
+                                        .filter((cartItem) => cartItem.id === item.id)
+                                        .map((cartItem) => (
+                                          <div key={cartItem.id}>+1</div>
+                                        ))
+                                      ) : (
+                                          <div>Order</div>
+                                      )}
+                                  </Button>
+
+                                  
+                                    {elements.some((cartItem) => cartItem.id === item.id) ? (
+                                      elements
+                                      .filter((cartItem) => cartItem.id === item.id)
+                                      .map((cartItem) => (
+                                        <CardContent key={cartItem.id} className='flex justify-center self-center'>
+                                          <div>{cartItem.quantity}</div>
+                                        </CardContent>
+                                      ))
+                                    ) : (
+                                      <></>
+                                    )}
+                                  
+                                  {elements.some((cartItem) => cartItem.id === item.id) ? (
+                                    <Button 
+                                    onClick={() => {decrement(item)}}
+                                    className="ml-auto cursor-pointer bg-black text-white border-black border-1 hover:bg-white hover:text-black hover:border-black hover:border-1">
+                                    -1
+                                    </Button>
+                                  ) : (
+                                    <></>
+                                  )}
+                                </CardContent>
                             </CardFooter>
                         </Card>
                     ))}
