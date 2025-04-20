@@ -3,6 +3,7 @@ import { Drawer as DrawerPrimitive } from "vaul";
 import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
 import { type RootState } from "../../../redux/store";
 import { clearCart } from "../../../redux/cartSlice";
+import shoppingBag from "/src/img/shopping_bag.svg";
 
 import { cn } from "@/lib/utils"
 import { Button } from "./button";
@@ -17,6 +18,24 @@ function DrawerTrigger({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />
+}
+
+function DrawerBag({ className, ...props }: React.ComponentProps<"div">) {
+  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const elements = useTypedSelector((state) => state.cart.itemList);
+
+  return (
+    <div
+      data-slot="drawer-bag"
+      className={cn("mt-auto flex flex-col gap-2", className)}
+      {...props}
+    >
+      <img src={shoppingBag} alt="Shopping Bag" />
+      <div className="absolute lg:top-[-0.5rem] lg:left-[-0.5rem] top-[-0.8rem] left-[-0.8rem] bg-black text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+        {elements.reduce((sum, item) => sum + item.quantity, 0)}
+      </div>
+    </div>
+  )
 }
 
 function DrawerPortal({
@@ -193,4 +212,5 @@ export {
   DrawerDescription,
   DrawerTotal,
   DrawerClearTotal,
+  DrawerBag,
 }
