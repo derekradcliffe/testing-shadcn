@@ -64,7 +64,7 @@ function App() {
                             </CardContent>
                             <CardFooter className='flex justify-between flex-col lg:flex-row'>
                                 <p className="text-sm text-muted-foreground font-semibold">{item.price}</p>
-                                <CardContent className='flex flex-row pt-[1rem] lg:pt-[0]'>
+                                <CardContent className='flex flex-row-reverse pt-[1rem] lg:pt-[0]'>
                                   <Button 
                                     onClick={() => {increment(item)}}
                                     className="ml-auto cursor-pointer bg-black text-white border-black border-1 hover:bg-white hover:text-black hover:border-black hover:border-1">
